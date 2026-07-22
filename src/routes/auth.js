@@ -27,7 +27,7 @@ route.post("/signup",async (req,res)=>{
         const user = new User(userObj)
 
         await user.save()
-        const token = await jwt.sign({_id:user._id},'Dev@Tinder4')
+        const token = await jwt.sign({_id:user._id},process.env.JWT_SECRET)
         res.cookie('token',token)
         res.status(201).json({"message":"Signup Successfully",data : user})
     } catch (error) {
@@ -48,7 +48,7 @@ route.post('/login',async(req,res)=>{
 
         const isValidPassword = await bcrypt.compare(password,user.password);
         if(isValidPassword){
-            const token = await jwt.sign({_id:user._id},'Dev@Tinder4')
+            const token = await jwt.sign({_id:user._id},process.env.JWT_SECRET)
             res.cookie('token',token)
             res.status(200).json({"message":'Login Successfully',"data":user})
         } else{ 

@@ -12,7 +12,7 @@ exports.userAuth = async (req,res,next) => {
         res.status(401).json({'message': 'Please Login'})
     }
 
-    const decoded = await jwt.verify(token,'Dev@Tinder4')
+    const decoded = await jwt.verify(token,process.env.JWT_SECRET)
 
     const {_id} = decoded
     if(!_id){
